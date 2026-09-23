@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>保富齡 Design System</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
+<style>
+/* Style-guide page chrome (not part of the site) */
+body{background:var(--color-bg);}
+.sg{padding-block:var(--space-12) var(--space-24);}
+.sg-wrap{max-width:var(--container-max);margin-inline:auto;padding-inline:max(16px,var(--space-gutter));display:flex;flex-direction:column;gap:var(--space-20);}
+.sg-top{display:flex;flex-direction:column;gap:var(--space-4);padding-bottom:var(--space-10);border-bottom:1px solid var(--color-border);}
+.sg-top h1{font-size:var(--fs-h1);}
+.sg-meta{display:flex;flex-wrap:wrap;gap:var(--space-2);}
+.sg-sec{display:flex;flex-direction:column;gap:var(--space-8);scroll-margin-top:var(--space-8);}
+.sg-sec>header{display:flex;flex-direction:column;gap:var(--space-2);max-width:48rem;}
+.sg-sec>header h2{font-size:var(--fs-h2);}
+.sg-sub{font-size:var(--fs-h4);}
+.sg-note{font-size:var(--fs-small);color:var(--color-text-muted);max-width:48rem;}
+.sg-toc{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0;padding:0;list-style:none;}
+.sg-toc a{display:inline-flex;align-items:center;min-height:var(--touch-target);padding-inline:var(--space-4);border:1px solid var(--color-border-strong);border-radius:var(--radius-pill);font-size:var(--fs-small);text-decoration:none;color:var(--color-text-heading);}
+.sg-toc a:hover{border-color:var(--color-brand-primary);color:var(--color-brand-primary);}
+.sg-brand{display:grid;gap:var(--space-6);grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));}
+.sg-brandchip{display:grid;grid-template-columns:5rem 1fr;gap:var(--space-4);align-items:center;padding:var(--space-5);border:1px solid var(--color-border);border-radius:var(--radius-lg);}
+.sg-brandchip i{display:block;width:5rem;height:5rem;border-radius:var(--radius-md);}
+.sg-brandchip code,.sg-sw code,.sg-table code{font-family:var(--font-mono);font-size:var(--fs-xs);}
+.sg-scale{display:flex;flex-direction:column;gap:var(--space-3);}
+.sg-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(7.5rem,1fr));gap:var(--space-2);}
+.sg-sw{display:flex;flex-direction:column;gap:var(--space-1);font-size:var(--fs-xs);line-height:1.4;}
+.sg-sw i{display:block;height:3.5rem;border-radius:var(--radius-sm);border:1px solid rgb(var(--shadow-rgb)/0.08);}
+.sg-sw b{color:var(--color-text-heading);}
+.sg-tablewrap{overflow-x:auto;border:1px solid var(--color-border);border-radius:var(--radius-lg);}
+.sg-table{width:100%;border-collapse:collapse;font-size:var(--fs-small);min-width:46rem;}
+.sg-table th,.sg-table td{padding:var(--space-3) var(--space-4);text-align:left;border-bottom:1px solid var(--color-border);vertical-align:middle;}
+.sg-table th{background:var(--color-bg-subtle);color:var(--color-text-heading);font-size:var(--fs-xs);letter-spacing:0.06em;}
+.sg-table tr:last-child td{border-bottom:0;}
+.sg-table td.num{font-variant-numeric:tabular-nums;font-weight:var(--fw-bold);color:var(--color-text-heading);}
+.sg-sample{display:inline-flex;align-items:center;justify-content:center;min-width:5.5rem;height:2.25rem;padding-inline:var(--space-3);border-radius:var(--radius-sm);font-weight:var(--fw-bold);font-size:var(--fs-small);}
+.sg-pass{display:inline-flex;align-items:center;gap:var(--space-1);padding:2px var(--space-2);border-radius:var(--radius-pill);background:var(--color-green-50);color:var(--color-green-800);font-size:var(--fs-xs);font-weight:var(--fw-bold);}
+.sg-type{display:flex;flex-direction:column;border-top:1px solid var(--color-border);}
+.sg-type>div{display:grid;grid-template-columns:minmax(0,11rem) 1fr;gap:var(--space-6);padding-block:var(--space-5);border-bottom:1px solid var(--color-border);align-items:baseline;}
+.sg-type small{color:var(--color-text-muted);font-size:var(--fs-xs);line-height:1.5;font-family:var(--font-mono);}
+.sg-bars{display:flex;flex-direction:column;gap:var(--space-2);}
+.sg-bar{display:grid;grid-template-columns:6rem 1fr;gap:var(--space-4);align-items:center;font-size:var(--fs-xs);font-family:var(--font-mono);color:var(--color-text-muted);}
+.sg-bar i{display:block;height:0.75rem;background:var(--color-navy-200);border-radius:2px;}
+.sg-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(10rem,1fr));gap:var(--space-6);}
+.sg-tile{display:flex;flex-direction:column;justify-content:flex-end;gap:var(--space-1);height:8rem;padding:var(--space-4);background:var(--color-white);border:1px solid var(--color-border);font-size:var(--fs-xs);}
+.sg-tile code{font-family:var(--font-mono);}
+.sg-stage{padding:var(--space-8);border:1px dashed var(--color-border-strong);border-radius:var(--radius-lg);background:var(--color-bg-subtle);display:flex;flex-direction:column;gap:var(--space-6);}
+.sg-stage--plain{background:var(--color-white);}
+.sg-stage--inverse{background:var(--color-bg-inverse);border-color:var(--color-navy-700);}
+.sg-btnrow{display:flex;flex-wrap:wrap;gap:var(--space-3);align-items:center;}
+.sg-label{font-size:var(--fs-xs);font-weight:var(--fw-bold);letter-spacing:0.08em;color:var(--color-text-muted);}
+.sg-stage--inverse .sg-label{color:var(--color-text-on-inverse-muted);}
+.sg-rules{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--fs-small);max-width:52rem;}
+.sg-frame{border:1px solid var(--color-border);border-radius:var(--radius-lg);overflow:hidden;background:var(--color-bg);}
+.sg-frame .pfo-header{position:relative;top:auto;}
+.sg-phone{max-width:24.375rem;}
+.sg-phone .pfo-nav{display:none;}
+.sg-phone .pfo-header__actions{display:flex;}
+.sg-phone .pfo-header__inner{min-height:var(--header-height-mobile);padding-inline:var(--space-5);}
+.sg-bps{display:grid;gap:var(--space-2);}
+.sg-bp{display:grid;grid-template-columns:5rem 1fr;gap:var(--space-4);align-items:center;font-size:var(--fs-small);}
+.sg-bp i{display:block;height:1.75rem;border-radius:var(--radius-xs);background:var(--color-navy-100);border:1px solid var(--color-navy-200);}
+.sg-demo-focus{outline:var(--focus-ring);outline-offset:var(--focus-offset);}
+.sg-logo-ph{display:inline-flex;align-items:center;gap:var(--space-2);font-weight:var(--fw-bold);color:var(--color-navy-800);font-size:var(--fs-small);text-decoration:none;}
+.sg-hero-title{margin:0;color:var(--color-text-on-inverse);font-size:var(--fs-display);font-weight:var(--fw-bold);line-height:var(--lh-tight);letter-spacing:var(--ls-heading);}
+.sg-logo-ph svg{width:2.25rem;height:2.25rem;}
+</style>
+</head>
+<body>
+<div class="pfo sg" id="top">
+<div class="sg-wrap">
+
+<header class="sg-top">
+<p class="pfo-eyebrow">PFO_NewWeb · PHASE 4</p>
+<h1>保富齡 Design System v1.0</h1>
+<p class="pfo-hero__lead" style="color:var(--color-text-body)">官網改版用的設計基礎：色彩、字型、間距、圓角、陰影、斷點，以及在沒有授權照片時仍能維持專業醫療感的核心元件。所有元件只使用 <code>tokens.css</code> 內的變數。</p>
+<div class="sg-meta"><span class="pfo-tag">WCAG 2.1 AA 全數通過</span><span class="pfo-tag">系統字型・零字型下載</span><span class="pfo-tag">僅淺色主題</span></div>
+<nav aria-label="本頁目錄"><ul class="sg-toc"><li><a href="#brand">品牌色</a></li><li><a href="#palette">色階</a></li><li><a href="#contrast">對比驗證</a></li><li><a href="#type">字型</a></li><li><a href="#space">間距・圓角・陰影</a></li><li><a href="#breakpoints">斷點</a></li><li><a href="#components">核心元件</a></li></ul></nav>
+</header>
+
+<section class="sg-sec" id="brand" aria-labelledby="h-brand">
+<header><p class="pfo-eyebrow">01 · 來源</p><h2 id="h-brand">品牌色：從舊站 Logo 取樣</h2>
+<p class="sg-note">從舊站 <code>logo.gif</code>（273×68）逐像素統計取得，不是目測。深藍是 Logo 中數量最多的彩色像素（606 px），綠色取自十字（133 px）。取得向量檔（G1）後再比對一次。</p></header>
+<div class="sg-brand">
+<div class="sg-brandchip"><i style="background:var(--color-navy-700)"></i><div><b>Logo Blue → navy-700</b><br><code>#2E3092</code><br><span class="sg-note">白底對比 10.75:1。主要按鈕、連結直接使用這個色。</span></div></div>
+<div class="sg-brandchip"><i style="background:var(--color-green-600)"></i><div><b>Logo Green → green-600</b><br><code>#27903A</code><br><span class="sg-note">白底對比 4.09:1，<strong>不能當內文色</strong>；只用於 ≥24px 大字、圖示、指示線。小字改用 green-700 <code>#1B7431</code>（5.85:1）。</span></div></div>
+<div class="sg-brandchip"><i style="background:var(--color-navy-900)"></i><div><b>Deep Navy → navy-900</b><br><code>#151A4D</code><br><span class="sg-note">由 Logo Blue 同色相加深，用於 Hero、CTA 區塊；Footer 用更深的 navy-950 <code>#0E1238</code>。</span></div></div>
+</div>
+</section>
+
+<section class="sg-sec" id="palette" aria-labelledby="h-palette">
+<header><p class="pfo-eyebrow">02 · 色階</p><h2 id="h-palette">色階與語意角色</h2>
+<p class="sg-note">元件一律使用語意變數（例如 <code>--color-text-body</code>、<code>--btn-primary-bg</code>），不直接寫色碼。灰色帶一點藍（色相約 228°），跟品牌深藍放在一起時不顯得冷硬。</p></header>
+<div class="sg-scale"><h3 class="sg-sub">Navy（主色，色相 ≈236°）</h3><div class="sg-row"><div class="sg-sw"><i style="background:var(--color-navy-950)"></i><b>navy-950</b><code>#0E1238</code></div><div class="sg-sw"><i style="background:var(--color-navy-900)"></i><b>navy-900</b><code>#151A4D</code></div><div class="sg-sw"><i style="background:var(--color-navy-800)"></i><b>navy-800</b><code>#1E2466</code></div><div class="sg-sw"><i style="background:var(--color-navy-700)"></i><b>navy-700</b><code>#2E3092</code></div><div class="sg-sw"><i style="background:var(--color-navy-600)"></i><b>navy-600</b><code>#3F45A8</code></div><div class="sg-sw"><i style="background:var(--color-navy-500)"></i><b>navy-500</b><code>#5A60C0</code></div><div class="sg-sw"><i style="background:var(--color-navy-300)"></i><b>navy-300</b><code>#A9ADE3</code></div><div class="sg-sw"><i style="background:var(--color-navy-200)"></i><b>navy-200</b><code>#CDD0F1</code></div><div class="sg-sw"><i style="background:var(--color-navy-100)"></i><b>navy-100</b><code>#E6E8F8</code></div><div class="sg-sw"><i style="background:var(--color-navy-50)"></i><b>navy-50</b><code>#F3F4FC</code></div></div></div>
+<div class="sg-scale"><h3 class="sg-sub">Green（輔色，色相 ≈131°）</h3><div class="sg-row"><div class="sg-sw"><i style="background:var(--color-green-900)"></i><b>green-900</b><code>#0F4A1E</code></div><div class="sg-sw"><i style="background:var(--color-green-800)"></i><b>green-800</b><code>#15612A</code></div><div class="sg-sw"><i style="background:var(--color-green-700)"></i><b>green-700</b><code>#1B7431</code></div><div class="sg-sw"><i style="background:var(--color-green-600)"></i><b>green-600</b><code>#27903A</code></div><div class="sg-sw"><i style="background:var(--color-green-500)"></i><b>green-500</b><code>#3DAA52</code></div><div class="sg-sw"><i style="background:var(--color-green-200)"></i><b>green-200</b><code>#C4E7CC</code></div><div class="sg-sw"><i style="background:var(--color-green-100)"></i><b>green-100</b><code>#E0F2E4</code></div><div class="sg-sw"><i style="background:var(--color-green-50)"></i><b>green-50</b><code>#F1F9F3</code></div></div></div>
+<div class="sg-scale"><h3 class="sg-sub">Neutral（冷灰）</h3><div class="sg-row"><div class="sg-sw"><i style="background:var(--color-gray-900)"></i><b>gray-900</b><code>#161A26</code></div><div class="sg-sw"><i style="background:var(--color-gray-800)"></i><b>gray-800</b><code>#262B38</code></div><div class="sg-sw"><i style="background:var(--color-gray-700)"></i><b>gray-700</b><code>#3A4050</code></div><div class="sg-sw"><i style="background:var(--color-gray-600)"></i><b>gray-600</b><code>#555C6D</code></div><div class="sg-sw"><i style="background:var(--color-gray-500)"></i><b>gray-500</b><code>#6E7585</code></div><div class="sg-sw"><i style="background:var(--color-gray-400)"></i><b>gray-400</b><code>#9CA2B0</code></div><div class="sg-sw"><i style="background:var(--color-gray-300)"></i><b>gray-300</b><code>#C9CED8</code></div><div class="sg-sw"><i style="background:var(--color-gray-200)"></i><b>gray-200</b><code>#E1E4EA</code></div><div class="sg-sw"><i style="background:var(--color-gray-100)"></i><b>gray-100</b><code>#EEF0F4</code></div><div class="sg-sw"><i style="background:var(--color-gray-50)"></i><b>gray-50</b><code>#F7F8FA</code></div><div class="sg-sw"><i style="background:var(--color-white)"></i><b>white</b><code>#FFFFFF</code></div></div></div>
+</section>
+
+<section class="sg-sec" id="contrast" aria-labelledby="h-contrast">
+<header><p class="pfo-eyebrow">03 · 無障礙</p><h2 id="h-contrast">色彩對比驗證（WCAG 2.1 AA）</h2>
+<p class="sg-note">依 WCAG 相對亮度公式計算。文字需 ≥4.5:1；24px 以上大字、按鈕邊框、focus ring 等非文字元素需 ≥3:1。下表列出設計系統允許的全部前景／背景組合；<strong>不在表內的組合不得使用</strong>。</p></header>
+<div class="sg-tablewrap"><table class="sg-table"><thead><tr><th scope="col">範例</th><th scope="col">前景</th><th scope="col">背景</th><th scope="col">對比</th><th scope="col">標準</th><th scope="col">結果</th><th scope="col">用途</th></tr></thead><tbody><tr><td><span class="sg-sample" style="color:#161A26;background:#FFFFFF;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>gray-900</code> #161A26</td><td><code>white</code> #FFFFFF</td><td class="num">17.36:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>標題文字 / 白底</td></tr><tr><td><span class="sg-sample" style="color:#3A4050;background:#FFFFFF;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>gray-700</code> #3A4050</td><td><code>white</code> #FFFFFF</td><td class="num">10.35:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>內文 / 白底</td></tr><tr><td><span class="sg-sample" style="color:#555C6D;background:#FFFFFF;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>gray-600</code> #555C6D</td><td><code>white</code> #FFFFFF</td><td class="num">6.69:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>次要文字 / 白底</td></tr><tr><td><span class="sg-sample" style="color:#161A26;background:#F7F8FA;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>gray-900</code> #161A26</td><td><code>gray-50</code> #F7F8FA</td><td class="num">16.33:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>標題 / Off-white 區塊</td></tr><tr><td><span class="sg-sample" style="color:#3A4050;background:#F7F8FA;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>gray-700</code> #3A4050</td><td><code>gray-50</code> #F7F8FA</td><td class="num">9.74:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>內文 / Off-white</td></tr><tr><td><span class="sg-sample" style="color:#555C6D;background:#F7F8FA;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>gray-600</code> #555C6D</td><td><code>gray-50</code> #F7F8FA</td><td class="num">6.30:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>次要文字 / Off-white</td></tr><tr><td><span class="sg-sample" style="color:#3A4050;background:#F3F4FC;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>gray-700</code> #3A4050</td><td><code>navy-50</code> #F3F4FC</td><td class="num">9.44:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>內文 / 品牌淡底</td></tr><tr><td><span class="sg-sample" style="color:#555C6D;background:#F3F4FC;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>gray-600</code> #555C6D</td><td><code>navy-50</code> #F3F4FC</td><td class="num">6.10:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>次要文字 / 品牌淡底</td></tr><tr><td><span class="sg-sample" style="color:#2E3092;background:#F3F4FC;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>navy-700</code> #2E3092</td><td><code>navy-50</code> #F3F4FC</td><td class="num">9.80:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>連結或標籤 / 品牌淡底</td></tr><tr><td><span class="sg-sample" style="color:#2E3092;background:#FFFFFF;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>navy-700</code> #2E3092</td><td><code>white</code> #FFFFFF</td><td class="num">10.75:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>連結 / 白底</td></tr><tr><td><span class="sg-sample" style="color:#2E3092;background:#F7F8FA;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>navy-700</code> #2E3092</td><td><code>gray-50</code> #F7F8FA</td><td class="num">10.11:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>連結 / Off-white</td></tr><tr><td><span class="sg-sample" style="color:#1E2466;background:#FFFFFF;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>navy-800</code> #1E2466</td><td><code>white</code> #FFFFFF</td><td class="num">14.01:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>連結 hover / 白底</td></tr><tr><td><span class="sg-sample" style="color:#1B7431;background:#FFFFFF;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>green-700</code> #1B7431</td><td><code>white</code> #FFFFFF</td><td class="num">5.85:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>綠色小字（eyebrow）/ 白底</td></tr><tr><td><span class="sg-sample" style="color:#1B7431;background:#F7F8FA;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>green-700</code> #1B7431</td><td><code>gray-50</code> #F7F8FA</td><td class="num">5.51:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>綠色小字 / Off-white</td></tr><tr><td><span class="sg-sample" style="color:#15612A;background:#F1F9F3;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>green-800</code> #15612A</td><td><code>green-50</code> #F1F9F3</td><td class="num">7.06:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>綠色標籤文字 / 綠淡底</td></tr><tr><td><span class="sg-sample" style="color:#27903A;background:#FFFFFF;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>green-600</code> #27903A</td><td><code>white</code> #FFFFFF</td><td class="num">4.09:1</td><td>大字／非文字 3:1</td><td><span class="sg-pass">✓ AA</span></td><td>Logo 綠：僅限大字(≥24px)或圖示</td></tr><tr><td><span class="sg-sample" style="color:#FFFFFF;background:#2E3092;">保富齡 Aa</span></td><td><code>white</code> #FFFFFF</td><td><code>navy-700</code> #2E3092</td><td class="num">10.75:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>主要按鈕文字</td></tr><tr><td><span class="sg-sample" style="color:#FFFFFF;background:#1E2466;">保富齡 Aa</span></td><td><code>white</code> #FFFFFF</td><td><code>navy-800</code> #1E2466</td><td class="num">14.01:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>主要按鈕 hover</td></tr><tr><td><span class="sg-sample" style="color:#FFFFFF;background:#151A4D;">保富齡 Aa</span></td><td><code>white</code> #FFFFFF</td><td><code>navy-900</code> #151A4D</td><td class="num">16.32:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>主要按鈕 active / 深色區塊內文</td></tr><tr><td><span class="sg-sample" style="color:#FFFFFF;background:#0E1238;">保富齡 Aa</span></td><td><code>white</code> #FFFFFF</td><td><code>navy-950</code> #0E1238</td><td class="num">18.07:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>Footer 標題</td></tr><tr><td><span class="sg-sample" style="color:#C9CED8;background:#0E1238;">保富齡 Aa</span></td><td><code>gray-300</code> #C9CED8</td><td><code>navy-950</code> #0E1238</td><td class="num">11.45:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>Footer 次要文字</td></tr><tr><td><span class="sg-sample" style="color:#CDD0F1;background:#151A4D;">保富齡 Aa</span></td><td><code>navy-200</code> #CDD0F1</td><td><code>navy-900</code> #151A4D</td><td class="num">10.79:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>Hero 副標 / 深藍底</td></tr><tr><td><span class="sg-sample" style="color:#C4E7CC;background:#151A4D;">保富齡 Aa</span></td><td><code>green-200</code> #C4E7CC</td><td><code>navy-900</code> #151A4D</td><td class="num">12.16:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>深藍底上的綠色小字</td></tr><tr><td><span class="sg-sample" style="color:#151A4D;background:#FFFFFF;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>navy-900</code> #151A4D</td><td><code>white</code> #FFFFFF</td><td class="num">16.32:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>白色按鈕文字（深色區塊內反白按鈕）</td></tr><tr><td><span class="sg-sample" style="color:#FFFFFF;background:#1B7431;">保富齡 Aa</span></td><td><code>white</code> #FFFFFF</td><td><code>green-700</code> #1B7431</td><td class="num">5.85:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>綠色徽章文字（少量使用）</td></tr><tr><td><span class="sg-sample" style="color:#B42318;background:#FFFFFF;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>red-700</code> #B42318</td><td><code>white</code> #FFFFFF</td><td class="num">6.57:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>錯誤訊息</td></tr><tr><td><span class="sg-sample" style="color:#B42318;background:#FEF3F2;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>red-700</code> #B42318</td><td><code>red-50</code> #FEF3F2</td><td class="num">6.05:1</td><td>文字 4.5:1</td><td><span class="sg-pass">✓ AA</span></td><td>錯誤訊息 / 淡紅底</td></tr><tr><td><span class="sg-sample" style="color:#6E7585;background:#FFFFFF;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>gray-500</code> #6E7585</td><td><code>white</code> #FFFFFF</td><td class="num">4.62:1</td><td>大字／非文字 3:1</td><td><span class="sg-pass">✓ AA</span></td><td>表單邊框（非文字 3:1）</td></tr><tr><td><span class="sg-sample" style="color:#3F45A8;background:#FFFFFF;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>navy-600</code> #3F45A8</td><td><code>white</code> #FFFFFF</td><td class="num">7.99:1</td><td>大字／非文字 3:1</td><td><span class="sg-pass">✓ AA</span></td><td>Focus ring / 白底（非文字 3:1）</td></tr><tr><td><span class="sg-sample" style="color:#3F45A8;background:#F7F8FA;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>navy-600</code> #3F45A8</td><td><code>gray-50</code> #F7F8FA</td><td class="num">7.52:1</td><td>大字／非文字 3:1</td><td><span class="sg-pass">✓ AA</span></td><td>Focus ring / Off-white</td></tr><tr><td><span class="sg-sample" style="color:#FFFFFF;background:#151A4D;">保富齡 Aa</span></td><td><code>white</code> #FFFFFF</td><td><code>navy-900</code> #151A4D</td><td class="num">16.32:1</td><td>大字／非文字 3:1</td><td><span class="sg-pass">✓ AA</span></td><td>Focus ring（白）/ 深藍底</td></tr><tr><td><span class="sg-sample" style="color:#27903A;background:#FFFFFF;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>green-600</code> #27903A</td><td><code>white</code> #FFFFFF</td><td class="num">4.09:1</td><td>大字／非文字 3:1</td><td><span class="sg-pass">✓ AA</span></td><td>選單目前頁指示線（非文字 3:1）</td></tr><tr><td><span class="sg-sample" style="color:#2E3092;background:#FFFFFF;border:1px solid var(--color-border)">保富齡 Aa</span></td><td><code>navy-700</code> #2E3092</td><td><code>white</code> #FFFFFF</td><td class="num">10.75:1</td><td>大字／非文字 3:1</td><td><span class="sg-pass">✓ AA</span></td><td>次要按鈕邊框（非文字 3:1）</td></tr><tr><td><span class="sg-sample" style="color:#A9ADE3;background:#151A4D;">保富齡 Aa</span></td><td><code>navy-300</code> #A9ADE3</td><td><code>navy-900</code> #151A4D</td><td class="num">7.60:1</td><td>大字／非文字 3:1</td><td><span class="sg-pass">✓ AA</span></td><td>反白框線按鈕邊框 / 深藍底（非文字 3:1）</td></tr></tbody></table></div>
+<ul class="sg-rules">
+<li>Logo 綠 <code>#27903A</code> 只能當大字或圖示；綠色小字一律用 green-700 以上。</li>
+<li>卡片邊框（gray-200／300）是裝飾，不承載資訊；表單輸入框邊框必須用 gray-500（4.62:1）。</li>
+<li>Focus ring：淺色底用 navy-600 3px，深藍底改用白色。</li>
+</ul>
+</section>
+
+<section class="sg-sec" id="type" aria-labelledby="h-type">
+<header><p class="pfo-eyebrow">04 · 字型</p><h2 id="h-type">字型系統</h2>
+<p class="sg-note">系統字型堆疊，不下載任何字型檔（效能優先）。英數字使用各平台的 UI 字型，中文依平台落到 PingFang TC（Apple）、微軟正黑體（Windows）、Noto Sans TC（Android）。字級使用 <code>clamp()</code> 在 375px 到 1440px 之間平滑縮放。中文內文行高 1.75。</p></header>
+<div class="sg-type">
+<div><small>--fs-display<br>32 → 52px · 700</small><p style="font-size:var(--fs-display);font-weight:700;line-height:var(--lh-tight);color:var(--color-text-heading)">保富齡健康事業股份有限公司</p></div>
+<div><small>--fs-h1<br>30 → 44px · 700</small><p style="font-size:var(--fs-h1);font-weight:700;line-height:var(--lh-tight);color:var(--color-text-heading)">服務項目</p></div>
+<div><small>--fs-h2<br>24 → 32px · 700</small><p style="font-size:var(--fs-h2);font-weight:700;line-height:var(--lh-tight);color:var(--color-text-heading)">代理產品</p></div>
+<div><small>--fs-h3<br>20 → 24px · 700</small><p style="font-size:var(--fs-h3);font-weight:700;line-height:var(--lh-tight);color:var(--color-text-heading)">Trixo 萃詩系列</p></div>
+<div><small>--fs-h4<br>18px · 700</small><p style="font-size:var(--fs-h4);font-weight:700;color:var(--color-text-heading)">對於羊毛脂萃取物過敏者可使用的Trixo萃詩護手霜</p></div>
+<div><small>--fs-body-lg<br>17 → 19px · 1.75</small><p style="font-size:var(--fs-body-lg);max-width:var(--measure)">以創新的理念提供專業的產品服務,專注的態度提供全方位的通路規劃,讓公司創造一個全新領域的健康照護產業,成為讓大眾幸福樂活的優質企業。</p></div>
+<div><small>--fs-body<br>16 → 17px · 1.75</small><p style="max-width:var(--measure)">提供糖尿病患及安養長照相關耗材儀器及專業傷口照護之有效產品。腸道健康照護系統設備合作規劃。</p></div>
+<div><small>--fs-small<br>15px</small><p style="font-size:var(--fs-small);color:var(--color-text-muted)">TEL (02)8221-5123　FAX (02)8221-5122</p></div>
+<div><small>--fs-xs<br>13px · 只用於標籤</small><p class="pfo-eyebrow">服務項目</p></div>
+</div>
+<p class="sg-note"><code>--font-sans</code>: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Noto Sans TC", "Noto Sans CJK TC", "Microsoft JhengHei", "Heiti TC", system-ui, sans-serif</p>
+</section>
+
+<section class="sg-sec" id="space" aria-labelledby="h-space">
+<header><p class="pfo-eyebrow">05 · 版面</p><h2 id="h-space">間距、圓角、陰影</h2>
+<p class="sg-note">以 4px 為基準。區塊上下間距 <code>--space-section</code> 為 48 → 96px；左右留白 <code>--space-gutter</code> 為 20 → 40px；內容最大寬 1200px，文章 760px。陰影帶一點深藍色調，不用純黑，看起來比較乾淨。</p></header>
+<div class="sg-bars"><div class="sg-bar"><span>--space-1</span><i style="width:4px"></i></div><div class="sg-bar"><span>--space-2</span><i style="width:8px"></i></div><div class="sg-bar"><span>--space-3</span><i style="width:12px"></i></div><div class="sg-bar"><span>--space-4</span><i style="width:16px"></i></div><div class="sg-bar"><span>--space-6</span><i style="width:24px"></i></div><div class="sg-bar"><span>--space-8</span><i style="width:32px"></i></div><div class="sg-bar"><span>--space-10</span><i style="width:40px"></i></div><div class="sg-bar"><span>--space-12</span><i style="width:48px"></i></div><div class="sg-bar"><span>--space-16</span><i style="width:64px"></i></div><div class="sg-bar"><span>--space-20</span><i style="width:80px"></i></div><div class="sg-bar"><span>--space-24</span><i style="width:96px"></i></div><div class="sg-bar"><span>--space-32</span><i style="width:128px"></i></div></div>
+<h3 class="sg-sub">圓角</h3><div class="sg-tiles"><div class="sg-tile" style="border-radius:var(--radius-xs)"><b>--radius-xs</b><code>4px</code><span>標籤、輸入框內部</span></div><div class="sg-tile" style="border-radius:var(--radius-sm)"><b>--radius-sm</b><code>6px</code><span>小元件</span></div><div class="sg-tile" style="border-radius:var(--radius-md)"><b>--radius-md</b><code>8px</code><span>按鈕、輸入框</span></div><div class="sg-tile" style="border-radius:var(--radius-lg)"><b>--radius-lg</b><code>12px</code><span>卡片</span></div><div class="sg-tile" style="border-radius:var(--radius-xl)"><b>--radius-xl</b><code>20px</code><span>CTA 區塊、Hero 面板</span></div><div class="sg-tile" style="border-radius:var(--radius-pill)"><b>--radius-pill</b><code>999px</code><span>膠囊連結</span></div></div>
+<h3 class="sg-sub">陰影</h3><div class="sg-tiles"><div class="sg-tile" style="border-radius:var(--radius-lg);border-color:transparent;box-shadow:var(--shadow-xs)"><b>--shadow-xs</b><span>卡片靜止</span></div><div class="sg-tile" style="border-radius:var(--radius-lg);border-color:transparent;box-shadow:var(--shadow-sm)"><b>--shadow-sm</b><span>主要按鈕</span></div><div class="sg-tile" style="border-radius:var(--radius-lg);border-color:transparent;box-shadow:var(--shadow-md)"><b>--shadow-md</b><span>卡片 hover</span></div><div class="sg-tile" style="border-radius:var(--radius-lg);border-color:transparent;box-shadow:var(--shadow-lg)"><b>--shadow-lg</b><span>浮層、行動選單</span></div></div>
+</section>
+
+<section class="sg-sec" id="breakpoints" aria-labelledby="h-bp">
+<header><p class="pfo-eyebrow">06 · RWD</p><h2 id="h-bp">斷點</h2>
+<p class="sg-note">以 min-width 由小往大寫。<code>sm 480</code>・<code>md 768</code>（平板：卡片改 2 欄、新聞列表改左右排）・<code>lg 1024</code>（桌機導覽出現、卡片 3 欄）・<code>xl 1280</code>・<code>2xl 1440</code>。CSS 變數不能用在 <code>@media</code> 裡，所以 media query 要直接寫數字。下方是專案規定的 8 個測試寬度。</p></header>
+<div class="sg-bps"><div class="sg-bp"><code>375px</code><i style="width:19.5%"></i></div><div class="sg-bp"><code>390px</code><i style="width:20.3%"></i></div><div class="sg-bp"><code>430px</code><i style="width:22.4%"></i></div><div class="sg-bp"><code>768px</code><i style="width:40.0%"></i></div><div class="sg-bp"><code>1024px</code><i style="width:53.3%"></i></div><div class="sg-bp"><code>1280px</code><i style="width:66.7%"></i></div><div class="sg-bp"><code>1440px</code><i style="width:75.0%"></i></div><div class="sg-bp"><code>1920px</code><i style="width:100.0%"></i></div></div>
+</section>
+
+<section class="sg-sec" id="components" aria-labelledby="h-comp">
+<header><p class="pfo-eyebrow">07 · 元件</p><h2 id="h-comp">核心元件：沒有照片時如何維持份量</h2>
+<p class="sg-note">原則：用<strong>深藍大色塊</strong>建立信任感與重量、用<strong>品牌十字圖形</strong>（取自 Logo）代替照片、用<strong>字級對比</strong>拉出層級、只在需要被點擊的物件上使用陰影。下列元件內容都來自舊站原文；元件名稱與按鈕文字為 [PROPOSED COPY]。</p></header>
+
+<h3 class="sg-sub">Header／導覽列</h3>
+<p class="sg-note">白底，底部用細線加極淡陰影和內容分開；目前所在頁用深藍粗體加上 3px 綠色指示線（綠色取自 Logo 十字）；「聯絡我們」是唯一的實心按鈕。寬度小於 1024px 時改成電話按鈕加漢堡選單。</p>
+<div class="sg-frame"><header class="pfo-header"><div class="pfo-header__inner">
+<a class="sg-logo-ph" href="#top" aria-label="保富齡健康事業股份有限公司 首頁（Logo 示意）"><svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" fill="none" stroke="#2E3092" stroke-width="14"/><path fill="#27903A" d="M84 50h32v34h34v32h-34v34H84v-34H50V84h34z"/></svg><span>LOGO（暫用舊站 GIF，待向量檔）</span></a>
+<nav class="pfo-nav" aria-label="主選單（示意）"><ul class="pfo-nav__list"><li><a class="pfo-nav__link" href="#components">關於我們</a></li><li><a class="pfo-nav__link" href="#components" aria-current="page">服務項目</a></li><li><a class="pfo-nav__link" href="#components">代理產品</a></li><li><a class="pfo-nav__link" href="#components">最新消息</a></li></ul><a class="pfo-btn pfo-btn--primary pfo-btn--sm" href="#components">聯絡我們</a></nav>
+<div class="pfo-header__actions"><a class="pfo-icon-btn" href="#components" aria-label="撥打總公司電話 (02)8221-5123"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></a><button class="pfo-icon-btn" type="button" aria-label="開啟選單" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+</div></header></div>
+<div class="sg-frame sg-phone"><header class="pfo-header"><div class="pfo-header__inner">
+<a class="sg-logo-ph" href="#top" aria-label="保富齡健康事業股份有限公司 首頁（Logo 示意）"><svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" fill="none" stroke="#2E3092" stroke-width="14"/><path fill="#27903A" d="M84 50h32v34h34v32h-34v34H84v-34H50V84h34z"/></svg><span>LOGO（暫用舊站 GIF，待向量檔）</span></a>
+<nav class="pfo-nav" aria-label="主選單（示意）"><ul class="pfo-nav__list"><li><a class="pfo-nav__link" href="#components">關於我們</a></li><li><a class="pfo-nav__link" href="#components" aria-current="page">服務項目</a></li><li><a class="pfo-nav__link" href="#components">代理產品</a></li><li><a class="pfo-nav__link" href="#components">最新消息</a></li></ul><a class="pfo-btn pfo-btn--primary pfo-btn--sm" href="#components">聯絡我們</a></nav>
+<div class="pfo-header__actions"><a class="pfo-icon-btn" href="#components" aria-label="撥打總公司電話 (02)8221-5123"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></a><button class="pfo-icon-btn" type="button" aria-label="開啟選單" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
+</div></header></div>
+
+<h3 class="sg-sub">按鈕</h3>
+<div class="sg-stage sg-stage--plain">
+<p class="sg-label">淺色背景</p>
+<div class="sg-btnrow"><a class="pfo-btn pfo-btn--primary" href="#components">聯絡我們</a><a class="pfo-btn pfo-btn--secondary" href="#components">查看服務項目</a><a class="pfo-link-arrow" href="#components">了解更多 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><button class="pfo-btn pfo-btn--primary" type="button" disabled>停用狀態</button><a class="pfo-btn pfo-btn--primary sg-demo-focus" href="#components">鍵盤 Focus</a></div>
+</div>
+<div class="sg-stage sg-stage--inverse on-inverse">
+<p class="sg-label">深藍背景</p>
+<div class="sg-btnrow"><a class="pfo-btn pfo-btn--inverse" href="#components">聯絡我們</a><a class="pfo-btn pfo-btn--ghost-inverse" href="#components">查看服務項目</a></div>
+</div>
+<ul class="sg-rules"><li>高度 48px（小尺寸 44px，不再更小）；圓角 8px；字重 700。</li><li>一個畫面只放一顆實心主要按鈕；次要動作用外框按鈕或箭頭連結。</li><li>hover 時只加深顏色、加陰影，不做縮放或彈跳。</li></ul>
+
+<h3 class="sg-sub">Hero（沒有照片）</h3>
+<p class="sg-note">深藍 navy-900 大色塊，搭配放大的 Logo 圓徽十字作為裝飾圖形（aria-hidden，不承載資訊）。視覺份量來自大字級、深色背景和留白，不需要照片。</p>
+<div class="sg-frame">
+<section class="pfo-hero on-inverse" aria-label="Hero 示意"><svg class="pfo-hero__mark" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="10"/><circle cx="100" cy="100" r="62" fill="none" stroke="currentColor" stroke-width="4"/><path class="accent" fill="currentColor" d="M86 58h28v28h28v28h-28v28H86v-28H58V86h28z"/></svg><div class="pfo-hero__inner">
+<p class="pfo-eyebrow">健康照護・透析通路</p>
+<p class="sg-hero-title">保富齡健康事業<br>股份有限公司</p>
+<p class="pfo-hero__lead">以創新的理念提供專業的產品服務,專注的態度提供全方位的通路規劃,讓公司創造一個全新領域的健康照護產業,成為讓大眾幸福樂活的優質企業。</p>
+<div class="pfo-hero__actions"><a class="pfo-btn pfo-btn--inverse" href="#components">查看服務項目</a><a class="pfo-btn pfo-btn--ghost-inverse" href="#components">聯絡我們</a></div>
+</div></section>
+</div>
+<p class="sg-note">Eyebrow「健康照護・透析通路」取自舊站兩項服務名稱的組合，屬 [PROPOSED COPY]。</p>
+
+<h3 class="sg-sub">服務卡片</h3>
+<p class="sg-note">白色卡片、細邊框、靜止時 xs 陰影；用品牌淡底圖示徽章代替照片。整張卡片可以點擊時，hover 會浮起 2px 並加深陰影（系統設定減少動態時關閉）。</p>
+<div class="pfo-grid pfo-grid--2">
+<article class="pfo-card pfo-card--link"><span class="pfo-icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21.5l8.8-8.8a5 5 0 0 0 0-7.1z"/><path d="M12 10v5M9.5 12.5h5"/></svg></span><h3>照護相關</h3><p>提供糖尿病患及安養長照相關耗材儀器及專業傷口照護之有效產品。</p><div class="pfo-card__footer"><a class="pfo-link-arrow" href="#components">了解更多 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+<article class="pfo-card pfo-card--link"><span class="pfo-icon-badge pfo-icon-badge--accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7s-6.5 7.1-6.5 11.8a6.5 6.5 0 0 0 13 0C18.5 9.8 12 2.7 12 2.7z"/><path d="M9 15a3 3 0 0 0 3 3"/></svg></span><h3>透析通路</h3><p>本公司經銷B'Braun原廠IDPN靜脈營養注射液，銷售各醫療診所。</p><div class="pfo-card__footer"><a class="pfo-link-arrow" href="#components">了解更多 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+</div>
+
+<h3 class="sg-sub">產品卡片（使用 Media Fallback）</h3>
+<p class="sg-note">取得授權的產品圖之前，圖片區改用品牌淡底加上 Logo 十字紋樣，中間放產品線名稱。這不是佔位框，而是可以直接上線的正式樣式；有照片後只要把這個區塊換成 <code>&lt;picture&gt;</code>。</p>
+<div class="pfo-grid pfo-grid--2">
+<article class="pfo-card pfo-card--link pfo-product-card"><div class="pfo-media-fallback" role="img" aria-label="Trixo 萃詩系列"><div><p class="pfo-media-fallback__label">Trixo</p><p class="pfo-media-fallback__sub">萃詩系列</p></div></div><div class="pfo-product-card__body"><p class="pfo-eyebrow">B'BRAUN</p><h3>Trixo 萃詩系列</h3><p>萃詩正常肌膚用護手霜、萃詩抗乾敏護膚護手乳液、萃詩純淨抗乾敏護膚護手乳液(無香)</p><a class="pfo-link-arrow" href="#components">查看產品 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+<article class="pfo-card pfo-card--link pfo-product-card"><div class="pfo-media-fallback" role="img" aria-label="IDPN"><div><p class="pfo-media-fallback__label">IDPN</p><p class="pfo-media-fallback__sub">B'BRAUN</p></div></div><div class="pfo-product-card__body"><p class="pfo-eyebrow">B'BRAUN</p><h3>IDPN</h3><p>本公司經銷B'Braun原廠IDPN靜脈營養注射液，銷售各醫療診所。</p><a class="pfo-link-arrow" href="#components">查看產品 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+</div>
+
+<h3 class="sg-sub">最新消息列表</h3>
+<ul class="pfo-news">
+<li class="pfo-news__item"><time class="pfo-news__date" datetime="2018-12-10">2018.12.10</time><p>本公司經銷B'Braun原廠IDPN靜脈營養注射液，銷售各醫療診所。</p></li>
+<li class="pfo-news__item"><time class="pfo-news__date" datetime="2014-02-21">2014.02.21</time><div style="display:flex;flex-direction:column;gap:var(--space-2)"><h4 class="pfo-news__title"><a href="#components">對於羊毛脂萃取物過敏者可使用的Trixo萃詩護手霜</a></h4><p>羊毛脂能預防皮膚過於乾燥，但有些皮膚專家則認為羊毛脂易導致敏感，引起皮膚過敏，並不是每一個人都適合。</p></div></li>
+</ul>
+
+<h3 class="sg-sub">據點卡片</h3>
+<div class="pfo-grid pfo-grid--3">
+<article class="pfo-card pfo-office"><span class="pfo-icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span><h3>北部據點（總公司）</h3><dl><dt>地址</dt><dd>新北市中和區中正路928號3樓</dd><dt>電話</dt><dd>(02)8221-5123</dd><dt>傳真</dt><dd>(02)8221-5122</dd></dl></article>
+<article class="pfo-card pfo-office"><span class="pfo-icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span><h3>中部據點</h3><dl><dt>地址</dt><dd>台中市西區五權路2-107號15樓</dd><dt>電話</dt><dd>(04)2376-2333</dd><dt>傳真</dt><dd>(04)2376-1177</dd></dl></article>
+<article class="pfo-card pfo-office"><span class="pfo-icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span><h3>南部據點</h3><dl><dt>地址</dt><dd>高雄市苓雅區三多二路171號9F-1</dd><dt>電話</dt><dd>(07)716-8518</dd><dt>傳真</dt><dd>(07)716-8730</dd></dl></article>
+</div>
+<p class="sg-note">據點名稱為 [PROPOSED COPY]，據點資料是否仍有效待確認（H4）。</p>
+
+<h3 class="sg-sub">CTA 區塊</h3>
+<div class="pfo-cta on-inverse"><h2>想進一步了解？請聯絡我們</h2><a class="pfo-btn pfo-btn--inverse" href="#components">聯絡我們</a></div>
+
+<h3 class="sg-sub">標籤／Eyebrow</h3>
+<div class="sg-btnrow"><span class="pfo-tag">B'BRAUN</span><span class="pfo-eyebrow">服務項目</span></div>
+</section>
+
+</div>
+</div>
+</body>
+</html>

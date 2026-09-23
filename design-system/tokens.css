@@ -1,0 +1,306 @@
+/* ==========================================================================
+   PFO_NewWeb — Design Tokens v1.0（PHASE 4）
+   保富齡健康事業股份有限公司 官網改版
+
+   - Single source of truth for colour, type, spacing, radius, shadow,
+     layout and motion. Components must use these variables — never raw hex.
+   - Brand colours are sampled from the old site's logo.gif (pixel count):
+       logo blue  #2E3092 (dominant brand pixel)
+       logo green #27903A (cross)
+     No vector logo yet (G1). Re-check against the vector file when provided.
+   - All text/background pairs listed in PHASE4_Design_System.md §3 are
+     verified against WCAG 2.1 AA (4.5:1 text, 3:1 large text / UI).
+   - Light theme only. The site has no dark mode [PROPOSED].
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------
+     1. COLOUR — primitive scales
+     ------------------------------------------------------------------ */
+
+  /* Navy — hue ≈ 236°, anchored on the logo blue (navy-700) */
+  --color-navy-950: #0E1238;
+  --color-navy-900: #151A4D;   /* Deep Navy: hero, dark bands */
+  --color-navy-800: #1E2466;
+  --color-navy-700: #2E3092;   /* = logo blue (sampled) */
+  --color-navy-600: #3F45A8;
+  --color-navy-500: #5A60C0;
+  --color-navy-300: #A9ADE3;
+  --color-navy-200: #CDD0F1;
+  --color-navy-100: #E6E8F8;
+  --color-navy-50:  #F3F4FC;
+
+  /* Green — hue ≈ 131°, anchored on the logo green (green-600) */
+  --color-green-900: #0F4A1E;
+  --color-green-800: #15612A;
+  --color-green-700: #1B7431;  /* smallest green allowed for body-size text */
+  --color-green-600: #27903A;  /* = logo green (sampled); large text / icons / indicators only */
+  --color-green-500: #3DAA52;
+  --color-green-200: #C4E7CC;
+  --color-green-100: #E0F2E4;
+  --color-green-50:  #F1F9F3;
+
+  /* Neutral — cool grey, hue ≈ 228° */
+  --color-gray-900: #161A26;
+  --color-gray-800: #262B38;
+  --color-gray-700: #3A4050;
+  --color-gray-600: #555C6D;
+  --color-gray-500: #6E7585;
+  --color-gray-400: #9CA2B0;
+  --color-gray-300: #C9CED8;
+  --color-gray-200: #E1E4EA;
+  --color-gray-100: #EEF0F4;
+  --color-gray-50:  #F7F8FA;
+  --color-white:    #FFFFFF;
+
+  /* Feedback (used only for form errors / 404 — minimal) */
+  --color-red-700: #B42318;
+  --color-red-50:  #FEF3F2;
+
+  /* ------------------------------------------------------------------
+     2. COLOUR — semantic roles (components use THESE)
+     ------------------------------------------------------------------ */
+
+  /* Brand */
+  --color-brand-primary:        var(--color-navy-700);
+  --color-brand-primary-hover:  var(--color-navy-800);
+  --color-brand-primary-active: var(--color-navy-900);
+  --color-brand-deep:           var(--color-navy-900);
+  --color-brand-accent:         var(--color-green-600);  /* non-text accents only */
+  --color-brand-accent-text:    var(--color-green-700);  /* accent used as text */
+
+  /* Surfaces */
+  --color-bg:            var(--color-white);
+  --color-bg-subtle:     var(--color-gray-50);   /* off-white bands */
+  --color-bg-brand-tint: var(--color-navy-50);   /* media fallback panels */
+  --color-bg-accent-tint:var(--color-green-50);
+  --color-bg-inverse:    var(--color-navy-900);  /* hero, CTA band */
+  --color-bg-footer:     var(--color-navy-950);
+
+  /* Text */
+  --color-text-heading:   var(--color-gray-900);
+  --color-text-body:      var(--color-gray-700);
+  --color-text-muted:     var(--color-gray-600);
+  --color-text-link:      var(--color-navy-700);
+  --color-text-link-hover:var(--color-navy-800);
+  --color-text-on-brand:  var(--color-white);
+  --color-text-on-inverse:        var(--color-white);
+  --color-text-on-inverse-muted:  var(--color-navy-200);
+  --color-text-on-inverse-accent: var(--color-green-200);
+  --color-text-footer-muted:      var(--color-gray-300);
+  --color-text-error:     var(--color-red-700);
+
+  /* Borders & lines */
+  --color-border:        var(--color-gray-200);  /* decorative dividers, card outline */
+  --color-border-strong: var(--color-gray-300);
+  --color-border-input:  var(--color-gray-500);  /* ≥3:1 for form controls */
+  --color-border-brand:  var(--color-navy-700);
+
+  /* Focus */
+  --color-focus:         var(--color-navy-600);
+  --color-focus-inverse: var(--color-white);
+
+  /* ------------------------------------------------------------------
+     3. TYPOGRAPHY — system stack, no web-font download
+     Latin glyphs from the OS UI font, CJK falls back to the platform
+     Traditional-Chinese face (PingFang TC on Apple, Microsoft JhengHei on
+     Windows, Noto Sans CJK TC / Noto Sans TC on Android/Linux).
+     ------------------------------------------------------------------ */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC",
+               "Noto Sans TC", "Noto Sans CJK TC", "Microsoft JhengHei",
+               "Heiti TC", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Consolas, "Liberation Mono", monospace;
+
+  /* Fluid type scale: min @375px → max @1440px */
+  --fs-display: clamp(2rem, 1.56rem + 1.878vw, 3.25rem);      /* 32 → 52 hero H1 */
+  --fs-h1:      clamp(1.875rem, 1.567rem + 1.315vw, 2.75rem);  /* 30 → 44 */
+  --fs-h2:      clamp(1.5rem, 1.324rem + 0.751vw, 2rem);       /* 24 → 32 */
+  --fs-h3:      clamp(1.25rem, 1.162rem + 0.376vw, 1.5rem);    /* 20 → 24 */
+  --fs-h4:      1.125rem;                                     /* 18 */
+  --fs-body-lg: clamp(1.0625rem, 1.018rem + 0.188vw, 1.1875rem);/* 17 → 19 lead */
+  --fs-body:    clamp(1rem, 0.978rem + 0.094vw, 1.0625rem);     /* 16 → 17 */
+  --fs-small:   0.9375rem;                                    /* 15 */
+  --fs-xs:      0.8125rem;                                    /* 13 — meta only, never body */
+
+  --fw-regular: 400;
+  --fw-medium:  500;   /* falls back to 400 on Microsoft JhengHei */
+  --fw-bold:    700;
+
+  --lh-tight:   1.3;   /* headings */
+  --lh-snug:    1.5;   /* UI, buttons, nav */
+  --lh-body:    1.75;  /* CJK body copy */
+
+  --ls-heading: 0.01em;
+  --ls-body:    0.02em;
+  --ls-eyebrow: 0.12em;
+
+  --measure:    38em;  /* max reading width ≈ 38 CJK chars */
+
+  /* ------------------------------------------------------------------
+     4. SPACING — 4px base
+     ------------------------------------------------------------------ */
+  --space-0:  0;
+  --space-1:  0.25rem;  /*  4 */
+  --space-2:  0.5rem;   /*  8 */
+  --space-3:  0.75rem;  /* 12 */
+  --space-4:  1rem;     /* 16 */
+  --space-5:  1.25rem;  /* 20 */
+  --space-6:  1.5rem;   /* 24 */
+  --space-8:  2rem;     /* 32 */
+  --space-10: 2.5rem;   /* 40 */
+  --space-12: 3rem;     /* 48 */
+  --space-16: 4rem;     /* 64 */
+  --space-20: 5rem;     /* 80 */
+  --space-24: 6rem;     /* 96 */
+  --space-32: 8rem;     /* 128 */
+
+  /* Fluid layout spacing */
+  --space-section: clamp(3rem, 1.944rem + 4.507vw, 6rem);   /* 48 → 96 vertical section padding */
+  --space-stack:   clamp(1.5rem, 1.148rem + 1.502vw, 2.5rem);/* 24 → 40 gap between blocks */
+  --space-gutter:  clamp(1.25rem, 0.81rem + 1.878vw, 2.5rem);/* 20 → 40 side padding */
+
+  /* ------------------------------------------------------------------
+     5. LAYOUT
+     ------------------------------------------------------------------ */
+  --container-max:    75rem;   /* 1200 — main content */
+  --container-wide:   82.5rem; /* 1320 — header / footer */
+  --container-narrow: 47.5rem; /* 760 — articles */
+  --grid-columns: 12;
+  --grid-gap: var(--space-6);
+
+  --header-height:        4.5rem; /* 72 desktop */
+  --header-height-mobile: 4rem;   /* 64 */
+  --touch-target:         2.75rem;/* 44 minimum */
+
+  /* Breakpoints (min-width). CSS variables cannot be used inside
+     @media, so these are documentation values — media queries must use
+     the same literal px numbers:
+       sm 480 | md 768 | lg 1024 | xl 1280 | 2xl 1440
+     Target test widths: 375 390 430 | 768 | 1024 1280 1440 1920 */
+  --bp-sm:  480px;
+  --bp-md:  768px;
+  --bp-lg:  1024px;
+  --bp-xl:  1280px;
+  --bp-2xl: 1440px;
+
+  /* ------------------------------------------------------------------
+     6. RADIUS
+     ------------------------------------------------------------------ */
+  --radius-xs:   4px;   /* tags, inputs inner */
+  --radius-sm:   6px;
+  --radius-md:   8px;   /* buttons, inputs */
+  --radius-lg:   12px;  /* cards */
+  --radius-xl:   20px;  /* hero panel, large media fallback */
+  --radius-pill: 999px; /* chips */
+
+  /* ------------------------------------------------------------------
+     7. SHADOW — navy-tinted, low opacity (never pure black)
+     ------------------------------------------------------------------ */
+  --shadow-rgb: 21 26 77;  /* = navy-900 */
+  --shadow-xs: 0 1px 2px rgb(var(--shadow-rgb) / 0.06);
+  --shadow-sm: 0 1px 3px rgb(var(--shadow-rgb) / 0.08),
+               0 1px 2px rgb(var(--shadow-rgb) / 0.04);
+  --shadow-md: 0 6px 16px -4px rgb(var(--shadow-rgb) / 0.10),
+               0 2px 4px -2px rgb(var(--shadow-rgb) / 0.06);
+  --shadow-lg: 0 16px 40px -12px rgb(var(--shadow-rgb) / 0.18),
+               0 4px 8px -4px rgb(var(--shadow-rgb) / 0.06);
+  --shadow-header: 0 1px 0 var(--color-border), 0 4px 12px -6px rgb(var(--shadow-rgb) / 0.10);
+
+  /* ------------------------------------------------------------------
+     8. FOCUS
+     ------------------------------------------------------------------ */
+  --focus-width:  3px;
+  --focus-offset: 2px;
+  --focus-ring:   var(--focus-width) solid var(--color-focus);
+
+  /* ------------------------------------------------------------------
+     9. MOTION — minimal, disabled under prefers-reduced-motion
+     ------------------------------------------------------------------ */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ------------------------------------------------------------------
+     10. Z-INDEX
+     ------------------------------------------------------------------ */
+  --z-base:    0;
+  --z-sticky:  100;  /* header */
+  --z-overlay: 200;  /* mobile menu backdrop */
+  --z-menu:    210;  /* mobile menu panel */
+  --z-skip:    300;  /* skip link */
+
+  /* ------------------------------------------------------------------
+     11. COMPONENT TOKENS
+     ------------------------------------------------------------------ */
+
+  /* Button */
+  --btn-height:        3rem;      /* 48 */
+  --btn-height-sm:     var(--touch-target); /* 44 — never smaller */
+  --btn-padding-x:     var(--space-6);
+  --btn-radius:        var(--radius-md);
+  --btn-font-size:     var(--fs-small);
+  --btn-font-weight:   var(--fw-bold);
+  --btn-border-width:  1.5px;
+
+  --btn-primary-bg:          var(--color-brand-primary);
+  --btn-primary-bg-hover:    var(--color-brand-primary-hover);
+  --btn-primary-bg-active:   var(--color-brand-primary-active);
+  --btn-primary-text:        var(--color-text-on-brand);
+
+  --btn-secondary-bg:        var(--color-white);
+  --btn-secondary-bg-hover:  var(--color-navy-50);
+  --btn-secondary-border:    var(--color-brand-primary);
+  --btn-secondary-text:      var(--color-brand-primary);
+
+  --btn-inverse-bg:          var(--color-white);           /* on navy bands */
+  --btn-inverse-bg-hover:    var(--color-navy-100);
+  --btn-inverse-text:        var(--color-navy-900);
+
+  --btn-disabled-bg:         var(--color-gray-100);
+  --btn-disabled-text:       var(--color-gray-500);
+
+  /* Navigation */
+  --nav-bg:             var(--color-white);
+  --nav-link:           var(--color-gray-800);
+  --nav-link-hover:     var(--color-brand-primary);
+  --nav-link-current:   var(--color-brand-primary);
+  --nav-indicator:      var(--color-brand-accent);  /* green bar under current page */
+  --nav-indicator-size: 3px;
+  --nav-gap:            var(--space-8);
+
+  /* Card */
+  --card-bg:            var(--color-white);
+  --card-border:        1px solid var(--color-border);
+  --card-radius:        var(--radius-lg);
+  --card-padding:       clamp(1.5rem, 1.324rem + 0.751vw, 2rem); /* 24 → 32 */
+  --card-shadow:        var(--shadow-xs);
+  --card-shadow-hover:  var(--shadow-md);
+  --card-lift-hover:    -2px;
+
+  /* Media fallback (replaces un-licensed photos) */
+  --media-fallback-bg:      var(--color-bg-brand-tint);
+  --media-fallback-motif:   var(--color-navy-100);  /* cross pattern, decorative */
+  --media-fallback-label:   var(--color-navy-700);
+  --media-ratio-card:       16 / 9;
+  --media-ratio-product:    4 / 3;
+
+  /* Tag / eyebrow */
+  --tag-bg:       var(--color-green-50);
+  --tag-text:     var(--color-green-800);
+  --tag-radius:   var(--radius-pill);
+  --eyebrow-text: var(--color-brand-accent-text);
+
+  /* Form (reserved — no form yet, H14) */
+  --input-height: var(--btn-height);
+  --input-border: 1px solid var(--color-border-input);
+  --input-radius: var(--radius-md);
+}
+
+/* Reduced motion: kill transitions & hover lifts globally */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --card-lift-hover: 0;
+  }
+}

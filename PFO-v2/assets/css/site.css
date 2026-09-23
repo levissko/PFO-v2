@@ -1,0 +1,526 @@
+/* ==========================================================================
+   PFO_NewWeb — site.css（PHASE 5）
+   Site-wide base + layout pieces that the frozen design system did not
+   cover (mobile menu, section head with link, review-mode notes).
+   Uses design tokens only. Load order: tokens.css → components.css → site.css
+   ========================================================================== */
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-height) + var(--space-4));
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; }
+body > main { flex: 1; }
+main:focus { outline: none; } /* focused only as the skip-link target */
+img, svg { max-width: 100%; }
+/* [hidden] must win everywhere — incl. inline SVG (UA stylesheet does not hide SVG elements) */
+[hidden] { display: none !important; }
+img { height: auto; }
+
+/* Visually hidden but available to screen readers */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+/* Body scroll lock while the mobile menu is open */
+.is-menu-open { overflow: hidden; }
+
+/* ---------- Section head with trailing link ---------- */
+.pfo-section__head--split {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-6);
+}
+
+/* ---------- Mobile menu (< 1024px) ---------- */
+.pfo-mobile-menu {
+  position: fixed;
+  inset: calc(var(--header-height-mobile) + env(safe-area-inset-top, 0px)) 0 0 0;
+  z-index: var(--z-menu);
+  overflow-y: auto;
+  padding: var(--space-4) var(--space-gutter) calc(var(--space-10) + env(safe-area-inset-bottom, 0px));
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+.pfo-mobile-menu__list { margin: 0; padding: 0; list-style: none; }
+.pfo-mobile-menu__list li { border-bottom: 1px solid var(--color-border); }
+.pfo-mobile-menu__link {
+  display: flex;
+  align-items: center;
+  min-height: 3.5rem;
+  color: var(--color-text-heading);
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+}
+.pfo-mobile-menu__link[aria-current="page"] { color: var(--color-brand-primary); }
+.pfo-mobile-menu__phones { display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-8); }
+.pfo-mobile-menu__phones-title { margin: 0; font-weight: var(--fw-bold); font-size: var(--fs-small); color: var(--color-text-muted); }
+.pfo-mobile-menu__phones ul { margin: 0; padding: 0; list-style: none; }
+.pfo-mobile-menu__phones a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--touch-target);
+  color: var(--color-text-body);
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+.pfo-mobile-menu__phones a span:last-child { color: var(--color-text-link); font-weight: var(--fw-bold); }
+@media (min-width: 1024px) {
+  .pfo-mobile-menu { display: none !important; }
+}
+
+/* ---------- Home: product names list ---------- */
+.pfo-plain-list { margin: 0; padding-left: 1.25em; }
+.pfo-plain-list li + li { margin-top: var(--space-1); }
+
+/* ---------- Home: news summary clamp ---------- */
+.pfo-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- Home: offices section action ---------- */
+.pfo-section__actions { margin-top: var(--space-stack); }
+@media (max-width: 767px) {
+  .pfo-section__actions .pfo-btn { width: 100%; }
+}
+
+/* ---------- Footer layout ---------- */
+.pfo-footer__inner {
+  display: grid;
+  gap: var(--space-10);
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-inline: var(--space-gutter);
+}
+.pfo-footer__brand { display: flex; flex-direction: column; gap: var(--space-3); }
+.pfo-footer__brand p:first-child { color: var(--color-text-on-inverse); font-size: var(--fs-h4); font-weight: var(--fw-bold); }
+.pfo-footer__offices { display: grid; gap: var(--space-5); }
+.pfo-footer__offices h3 { font-size: var(--fs-small); }
+.pfo-footer__offices p { font-variant-numeric: tabular-nums; }
+.pfo-footer__links ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2) var(--space-6);
+  margin: 0; padding: 0; list-style: none;
+}
+.pfo-footer__links a { display: inline-flex; align-items: center; min-height: var(--touch-target); text-decoration: none; }
+.pfo-footer__links a:hover { text-decoration: underline; }
+.pfo-footer__bottom {
+  max-width: var(--container-wide);
+  margin: var(--space-10) auto 0;
+  padding: var(--space-6) var(--space-gutter) 0;
+  border-top: 1px solid var(--color-navy-800);
+  font-size: var(--fs-xs);
+}
+@media (min-width: 768px) {
+  .pfo-footer__offices { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .pfo-footer__inner { grid-template-columns: 1.1fr 3fr 1fr; }
+  .pfo-footer__offices { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pfo-footer__links ul { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   REVIEW MODE — test build only
+   <html class="is-review"> shows the owner-review notes (dashed boxes) and
+   the test banner. Remove the class before production cutover: every note
+   disappears and nothing else changes.
+   ========================================================================== */
+.pfo-review-note,
+.pfo-review-banner { display: none; }
+
+.is-review .pfo-review-banner p { margin: 0; }
+.is-review .pfo-review-banner {
+  display: block;
+  padding: var(--space-2) var(--space-gutter);
+  background: var(--color-red-50);
+  color: var(--color-red-700);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  text-align: center;
+}
+.is-review .pfo-review-note {
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  border: 1.5px dashed var(--color-red-700);
+  border-radius: var(--radius-md);
+  background: var(--color-red-50);
+  color: var(--color-red-700);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-snug);
+}
+.is-review .pfo-review-note--full { flex-basis: 100%; }
+.is-review .pfo-review-note strong { font-weight: var(--fw-bold); }
+.is-review .on-inverse .pfo-review-note,
+.is-review .pfo-footer .pfo-review-note { margin-top: var(--space-2); }
+
+/* ==========================================================================
+   INNER PAGES（PHASE 6）
+   ========================================================================== */
+
+/* ---------- Page head: breadcrumb + H1 on a subtle band ---------- */
+.pfo-page-head {
+  padding-block: var(--space-10) var(--space-12);
+  background: var(--color-bg-subtle);
+  border-bottom: 1px solid var(--color-border);
+}
+.pfo-page-head .pfo-container { display: flex; flex-direction: column; gap: var(--space-3); }
+.pfo-page-head h1 { font-size: var(--fs-h1); }
+.pfo-page-head__meta { color: var(--color-text-muted); font-size: var(--fs-small); font-variant-numeric: tabular-nums; }
+.pfo-page-head--article h1 { max-width: var(--container-narrow); }
+
+/* ---------- Breadcrumb ---------- */
+.pfo-breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+.pfo-breadcrumb li { display: inline-flex; align-items: center; gap: var(--space-2); }
+.pfo-breadcrumb li + li::before { content: "›"; content: "›" / ""; color: var(--color-gray-500); } /* PHASE 9: decorative, empty alt text for screen readers */
+.pfo-breadcrumb a { color: var(--color-text-muted); }
+.pfo-breadcrumb a:hover { color: var(--color-text-link); }
+.pfo-breadcrumb [aria-current="page"] { color: var(--color-text-heading); }
+
+/* ---------- In-page anchor chips ---------- */
+.pfo-anchor-nav {
+  border-bottom: 1px solid var(--color-border);
+  padding-block: var(--space-4);
+  background: var(--color-bg);
+}
+.pfo-anchor-nav ul { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.pfo-anchor-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  padding-inline: var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-heading);
+  font-size: var(--fs-small);
+  text-decoration: none;
+}
+.pfo-anchor-nav a:hover { border-color: var(--color-brand-primary); color: var(--color-brand-primary); }
+
+/* ---------- Split block: heading column + content column ---------- */
+.pfo-split { display: grid; gap: var(--space-6); }
+.pfo-split__head { display: flex; flex-direction: column; gap: var(--space-4); }
+.pfo-split h2 { font-size: var(--fs-h2); }
+.pfo-split__body { display: flex; flex-direction: column; gap: var(--space-5); max-width: var(--measure); }
+@media (min-width: 1024px) {
+  .pfo-split { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-8); }
+  .pfo-split__head { grid-column: span 4; }
+  .pfo-split__body { grid-column: span 8; }
+}
+
+/* ---------- Bulleted list inside prose ---------- */
+.pfo-list { margin: 0; padding-left: 1.25em; display: flex; flex-direction: column; gap: var(--space-2); }
+
+/* ---------- Definition list (company profile) ---------- */
+.pfo-facts { display: grid; gap: var(--space-4); margin: 0; }
+.pfo-facts > div { display: grid; gap: var(--space-1); padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-border); }
+.pfo-facts dt { color: var(--color-text-muted); font-size: var(--fs-small); }
+.pfo-facts dd { margin: 0; color: var(--color-text-heading); font-weight: var(--fw-bold); }
+@media (min-width: 768px) {
+  .pfo-facts > div { grid-template-columns: 10rem 1fr; gap: var(--space-6); align-items: baseline; }
+}
+
+/* ---------- Product block (T-ProductLine) ---------- */
+.pfo-product-list { display: flex; flex-direction: column; }
+.pfo-product {
+  display: grid;
+  gap: var(--space-6);
+  padding-block: var(--space-stack);
+  border-bottom: 1px solid var(--color-border);
+  scroll-margin-top: calc(var(--header-height) + var(--space-4));
+}
+.pfo-product:first-child { padding-top: 0; }
+.pfo-product .pfo-media-fallback { border-radius: var(--radius-lg); }
+.pfo-product__body { display: flex; flex-direction: column; gap: var(--space-3); }
+.pfo-product__body h2 { font-size: var(--fs-h3); }
+.pfo-product__en { color: var(--color-text-muted); font-size: var(--fs-small); }
+.pfo-product__body h3 { font-size: var(--fs-h4); margin-top: var(--space-3); }
+@media (min-width: 768px) {
+  .pfo-product { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-10); align-items: start; }
+}
+
+/* ---------- Brand block (products overview) ---------- */
+.pfo-brand-block {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--card-padding);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-brand-tint);
+  margin-bottom: var(--space-stack);
+}
+.pfo-brand-block p:last-child { max-width: var(--measure); }
+
+/* ---------- Notice (IDPN medical-team notice) ---------- */
+.pfo-notice {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  padding: var(--space-5) var(--space-6);
+  border: 1px solid var(--color-navy-200);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-brand-tint);
+  color: var(--color-text-heading);
+  font-weight: var(--fw-bold);
+}
+.pfo-notice svg { flex-shrink: 0; width: 1.5rem; height: 1.5rem; color: var(--color-brand-primary); margin-top: 0.15em; }
+
+/* ---------- Article prose ---------- */
+.pfo-prose { max-width: var(--container-narrow); display: flex; flex-direction: column; gap: var(--space-4); }
+.pfo-prose h2 { font-size: var(--fs-h3); margin-top: var(--space-6); }
+.pfo-prose h3 { font-size: var(--fs-h4); margin-top: var(--space-3); }
+.pfo-prose ol { margin: 0; padding-left: 1.5em; display: flex; flex-direction: column; gap: var(--space-1); }
+.pfo-prose hr { width: 100%; border: 0; border-top: 1px solid var(--color-border); margin-block: var(--space-6); }
+.pfo-article-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-10); padding-top: var(--space-8); border-top: 1px solid var(--color-border); }
+@media (max-width: 767px) {
+  .pfo-article-actions .pfo-btn { width: 100%; }
+}
+
+/* ---------- Contact ---------- */
+.pfo-office__actions { margin-top: auto; padding-top: var(--space-2); }
+.pfo-contact-email { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-6); }
+.pfo-contact-email a { font-size: var(--fs-h3); font-weight: var(--fw-bold); }
+
+/* ---------- 404 ---------- */
+.pfo-error { display: flex; flex-direction: column; gap: var(--space-5); max-width: 40rem; }
+.pfo-error__code { font-size: var(--fs-small); font-weight: var(--fw-bold); letter-spacing: var(--ls-eyebrow); color: var(--color-brand-accent-text); }
+.pfo-error h1 { font-size: var(--fs-h1); }
+
+/* ---------- Lead paragraph & narrow column ---------- */
+.pfo-lead { font-size: var(--fs-body-lg); color: var(--color-text-heading); max-width: var(--measure); }
+.pfo-narrow { display: flex; flex-direction: column; gap: var(--space-6); max-width: var(--container-narrow); }
+
+/* ==========================================================================
+   RESPONSIVE FIXES（PHASE 7）
+   Findings from the 8-width audit (1920 1440 1280 1024 768 430 390 375).
+   ========================================================================== */
+
+/* R1 — Header / footer align with the 1200px content column at every width
+   (they used the 1320px "wide" container, so the logo sat 60px left of the
+   page headings on 1440/1920). Border-box + gutter padding = 1200 content. */
+.pfo-header__inner,
+.pfo-footer__inner,
+.pfo-footer__bottom {
+  max-width: calc(var(--container-max) + 2 * var(--space-gutter));
+}
+
+/* R2 — Hero text vs. decorative mark (768–1279): the mark overlapped the
+   lead paragraph at 768. Keep the text column clear of the mark. */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .pfo-hero__mark { width: min(34vw, 30rem); }
+}
+/* PHASE 9: applies at every width ≥ 768 — at 200% text size the lead
+   paragraph otherwise ran over the green cross (text contrast < 4.5:1). */
+@media (min-width: 768px) {
+  .pfo-hero__inner > * { max-width: 62%; }
+}
+
+/* R3 — Touch targets ≥ 44px on touch widths (< 1024) for links that are not
+   inline in running text: breadcrumb, 404 page links, contact e-mail. */
+@media (max-width: 1023px) {
+  .pfo-breadcrumb a,
+  .pfo-error .pfo-list a,
+  .pfo-contact-email a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--touch-target);
+  }
+  .pfo-breadcrumb ol { row-gap: 0; }
+}
+
+/* R4 — Office cards: 3 items never leave an orphan, addresses never break
+   mid-number.
+   < 768   : 1 column (unchanged)
+   768–1279: 1 column, each card laid out as a row (name | details)
+   ≥ 1280  : 3 columns */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .pfo-grid--3 { grid-template-columns: minmax(0, 1fr); }
+  .pfo-office {
+    display: grid;
+    grid-template-columns: auto minmax(0, 13rem) minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--space-6);
+  }
+  .pfo-office .pfo-office__actions { grid-column: 3; padding-top: 0; }
+}
+
+/* R5 — Footer ≥ 1024: brand + links on the first row, the three offices get
+   a full-width second row so addresses fit on one line */
+@media (min-width: 1024px) {
+  .pfo-footer__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: "brand links" "offices offices";
+  }
+  .pfo-footer__brand { grid-area: brand; }
+  .pfo-footer__links { grid-area: links; }
+  .pfo-footer__offices { grid-area: offices; }
+  .pfo-footer__links ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.nowrap { white-space: nowrap; }
+
+/* ==========================================================================
+   ACCESSIBILITY（PHASE 9）
+   ========================================================================== */
+
+/* A1 — Windows High Contrast / forced colors: backgrounds are removed, so give
+   buttons, cards and the focus ring real system-colour borders. */
+@media (forced-colors: active) {
+  .pfo-btn,
+  .pfo-icon-btn,
+  .pfo-anchor-nav a { border: 1px solid ButtonText; }
+  .pfo-card,
+  .pfo-cta,
+  .pfo-notice,
+  .pfo-brand-block { border: 1px solid CanvasText; }
+  .pfo :focus-visible { outline: 3px solid Highlight; }
+  .pfo-nav__link[aria-current="page"]::after { background: Highlight; }
+  .pfo-media-fallback { forced-color-adjust: auto; }
+  .pfo-hero__mark { display: none; } /* decorative; loses its dark backdrop in forced colors */
+}
+
+/* A2 — Focus must never land behind the sticky header when tabbing
+   backwards (WCAG 2.4.7; also covers 2.2's 2.4.11). */
+:where(a, button, [tabindex]):focus-visible { scroll-margin-top: calc(var(--header-height) + var(--space-4)); scroll-margin-bottom: var(--space-4); }
+
+/* A3 — Text-only zoom (WCAG 1.4.4): at 200% text size the desktop nav labels
+   broke one character per line. Keep each label on one line and let the list
+   wrap onto a second row instead. */
+.pfo-nav__link,
+.pfo-nav .pfo-btn { white-space: nowrap; }
+@media (min-width: 1024px) {
+  .pfo-nav { flex-wrap: wrap; justify-content: flex-end; row-gap: var(--space-2); }
+  .pfo-nav__list { flex-wrap: wrap; justify-content: flex-end; row-gap: 0; }
+}
+
+/* ==========================================================================
+   PHASE 11 — PHOTOGRAPHY（業主提供的情境圖）
+   ========================================================================== */
+
+/* P1 — Hero with background photo.
+   The photo is an <img> (responsive srcset, fetchpriority=high) placed behind
+   the text; ::after lays a deep-navy gradient over it. The overlay is dark
+   enough that white text and the navy-200 lead stay ≥ 4.5:1 even over the
+   brightest pixels of the photo (verified by sampling the rendered page).
+   Overlay colour = --color-navy-950 (#0E1238). */
+.pfo-hero--photo { isolation: isolate; background: var(--color-navy-950); }
+.pfo-hero__media { position: absolute; inset: 0; z-index: -1; }
+.pfo-hero__media picture,
+.pfo-hero__media img { display: block; width: 100%; height: 100%; }
+.pfo-hero__media img { object-fit: cover; object-position: 70% 50%; }
+.pfo-hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* phones: text spans the full width → an even, strong overlay */
+  background: linear-gradient(180deg, rgb(14 18 56 / 0.82) 0%, rgb(14 18 56 / 0.9) 100%);
+}
+@media (min-width: 768px) {
+  /* text sits in the left 62% → darkest on the left, lets the lobby show on the right */
+  .pfo-hero__media::after {
+    background: linear-gradient(90deg,
+      rgb(14 18 56 / 0.94) 0%,
+      rgb(14 18 56 / 0.88) 45%,
+      rgb(14 18 56 / 0.62) 75%,
+      rgb(14 18 56 / 0.45) 100%);
+  }
+}
+
+/* P1b — 「圖片為情境示意」: low-key disclosure in the hero's bottom-right corner.
+   Small (--fs-xs) but still normal-contrast text: the translucent navy pill keeps
+   it ≥ 4.5:1 even where the overlay is lightest (right edge on desktop). */
+.pfo-hero__caption {
+  position: absolute;
+  inset-inline-end: var(--space-gutter);
+  inset-block-end: var(--space-3);
+  margin: 0;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: rgb(14 18 56 / 0.85);
+  color: var(--color-navy-200);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+@media (forced-colors: active) { .pfo-hero__caption { position: static; margin: var(--space-4) var(--space-gutter) 0; } }
+
+/* P2 — Image area on top of a card (service + product cards). */
+.pfo-card--media { overflow: hidden; }
+.pfo-card__media {
+  display: block;
+  aspect-ratio: var(--media-ratio-card);        /* 16 / 9 */
+  overflow: hidden;
+  background: var(--color-bg-brand-tint);       /* shows while the lazy image loads */
+}
+.pfo-card__media picture,
+.pfo-card__media img { display: block; width: 100%; height: 100%; }
+.pfo-card__media img { object-fit: cover; }
+/* service cards have padding: let the image bleed to the card edges */
+.pfo-card--media > .pfo-card__media { margin: calc(var(--card-padding) * -1) calc(var(--card-padding) * -1) 0; }
+/* product cards have no padding; keep the divider the fallback had */
+.pfo-product-card > .pfo-card__media { border-bottom: 1px solid var(--color-border); }
+/* dialysis card: no photo available (H11) → brand motif + icon at the same size */
+.pfo-card__media--motif { display: grid; place-items: center; max-width: none; color: var(--color-brand-accent-text); }
+.pfo-card__media--motif svg { width: 3.5rem; height: 3.5rem; }
+
+@media (forced-colors: active) {
+  /* the gradient overlay is removed in forced colours → hide the photo so text stays readable */
+  .pfo-hero__media { display: none; }
+}
+
+/* ==========================================================================
+   PHASE 11 — MOTION：輕微向上浮現（fade-in-up）
+   Only when the user has not asked for reduced motion. Content is never
+   hidden without JavaScript: cards are hidden only after main.js marks them
+   (and only those still below the fold), so no-JS and reduced-motion users
+   always see everything immediately.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pfo-fade-up {
+    from { opacity: 0; transform: translateY(1rem); }
+    to   { opacity: 1; transform: none; }
+  }
+  /* Hero text: on page load, slightly staggered */
+  .pfo-hero__inner > * { animation: pfo-fade-up 600ms var(--ease-standard) both; }
+  .pfo-hero__inner > :nth-child(2) { animation-delay: 90ms; }
+  .pfo-hero__inner > :nth-child(3) { animation-delay: 180ms; }
+
+  /* Cards: main.js adds .pfo-reveal to cards below the fold, then
+     .is-visible when they scroll into view. Uses `animation` (not
+     `transition`) so the card hover-lift transition is left untouched. */
+  .pfo-reveal:not(.is-visible):not(:focus-within) { opacity: 0; }  /* keyboard focus always shows the card */
+  .pfo-reveal.is-visible { animation: pfo-fade-up 600ms var(--ease-standard) both; }
+}
+/* never print a card that has not been scrolled to yet */
+@media print { .pfo-reveal { opacity: 1 !important; animation: none !important; } }

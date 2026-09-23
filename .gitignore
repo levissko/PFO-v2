@@ -1,0 +1,10 @@
+# 暫存、截圖、原始檔（不上傳）
+temp-file/
+Claude outputs/
+PFO-v2/assets/img/src/
+tools/perf/reports/
+Design.html
+__pycache__/
+*.pyc
+Thumbs.db
+desktop.ini
